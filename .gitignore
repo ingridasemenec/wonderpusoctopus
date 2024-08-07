@@ -1,0 +1,4 @@
+#The ignore file 
+#
+#For MAC files
+**.DS_Store
