@@ -25,17 +25,46 @@ Predicting/Forecasting chlorophyll levels accurately.
 
 ## Dataset
 - The data is collected by [Copernicus Marine Dataset](https://www.copernicus.eu/en).
-- ....
-- The  dataset covers chlorophyll levels, sea surface temperature, sea surface salinity and other biogeochemical features.
+- Copernicus Marine Datasets included
+Dataset 1: Global Ocean Color (satellite observations)
+ Chlorophyll 
+
+Dataset 2: Global Ocean Biochemistry (simulated)
+O2; NO3; PO4; Si; Fe
+
+Dataset 3: Global Ocean OSTIA (using in-situ & satellite data)
+Sea Surface Temperature 
+
+Dataset 4: Multi Observation Global Ocean (using in-situ & satellite data)
+Sea Surface Salinity and Sea Surface Density
+
+Dataset 5: Global Ocean Surface Carbon (From model based on in-situ data)
+Dissolved inorganic carbon; Total alkalinity; Surface partial pressure of CO2
+              Sea water pH; Calcite saturation state; Aragonite saturation state; Surface 
+              downward flux of CO2
 - Data processing:
   - ...
 
 ## Approach
-We start by....
+Select Ocean Regions: 
+Shallow regions are significant due to their enhanced light availability, nutrient recycling, and diverse ecosystems, supporting higher primary productivity and biodiversity. 
+
+The selected region of interest: North Sea
+
+Select time frame : Sep 1997 - Dec 2021
+
+Research questions
+What are the primary biogeochemical and physical factors influencing chlorophyll density in various shallow sea regions?
+How can these factors be quantitatively integrated into a robust predictive model for chlorophyll density?
+
 Here, we outline a summary of our employed strategies:
 
 - **Random Forests**:
 - **XgBoost**:
+- **CNN**:
+- **ConvLSTM**:
+  
+## ConvLSTM
 
-
-
+![]() <img src="https://github.com/ingridasemenec/wunderpusoctopus/tree/main/ConvLSTM/chlorophyll_animation_map.gif" width=70%>
+![]() <img src="https://github.com/ingridasemenec/wunderpusoctopus/tree/main/ConvLSTM/seasonality.png" width=70%>
