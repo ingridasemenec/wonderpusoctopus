@@ -72,5 +72,6 @@ Here, we outline a summary of our employed strategies:
 ## ConvLSTM
 The model captures key temporal patterns, as shown in the seasonality plot, but struggles with higher concentration areas, as indicated by the RMSE heatmap. The model tends to underpredict the concentration at the shoreline areas. However as we can see from the animated timesteps of prediction vs actual, we succeed in capturing the basic spacial structure as well as seasonal dependence. This demonstrates that this model is a viable option for this application if given more data and time.
 
-![]() <img src="https://github.com/ingridasemenec/wunderpusoctopus/tree/main/ConvLSTM/chlorophyll_animation_map.gif" width=70%>
-![]() <img src="https://github.com/ingridasemenec/wunderpusoctopus/tree/main/ConvLSTM/seasonality.png" width=70%>
+![]() <img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/ConvLSTM/chlorophyll_animation_map.gif" width=80%>
+![]() <img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/ConvLSTM/seasonality.png" width=60%>
+![]() <img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/ConvLSTM/rmseheatmap.png" width=60%>
