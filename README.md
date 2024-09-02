@@ -25,7 +25,8 @@ Predicting/Forecasting chlorophyll levels accurately.
 
 ## Dataset
 - The data is collected by [Copernicus Marine Dataset](https://www.copernicus.eu/en).
-- Copernicus Marine Datasets included
+Copernicus Marine Datasets included:
+
 Dataset 1: Global Ocean Color (satellite observations)
  Chlorophyll 
 
@@ -53,18 +54,20 @@ The selected region of interest: North Sea
 
 Select time frame : Sep 1997 - Dec 2021
 
-Research questions
-What are the primary biogeochemical and physical factors influencing chlorophyll density in various shallow sea regions?
-How can these factors be quantitatively integrated into a robust predictive model for chlorophyll density?
+Research questions:
+
+-What are the primary biogeochemical and physical factors influencing chlorophyll density in various shallow sea regions?
+-How can these factors be quantitatively integrated into a robust predictive model for chlorophyll density?
 
 Here, we outline a summary of our employed strategies:
 
 - **Random Forests**:
 - **XgBoost**:
 - **CNN**:
-- **ConvLSTM**:
+- **ConvLSTM**: Convolutional Long Short-Term Memory model trained to predict chlorophyll concentrations across both space and time.
   
 ## ConvLSTM
+The model captures key temporal patterns, as shown in the seasonality plot, but struggles with higher concentration areas, as indicated by the RMSE heatmap. The model tends to underpredict the concentration at the shoreline areas. However as we can see from the animated timesteps of prediction vs actual, we succeed in capturing the basic spacial structure as well as seasonal dependence. This demonstrates that this model is a viable option for this application if given more data and time.
 
 ![]() <img src="https://github.com/ingridasemenec/wunderpusoctopus/tree/main/ConvLSTM/chlorophyll_animation_map.gif" width=70%>
 ![]() <img src="https://github.com/ingridasemenec/wunderpusoctopus/tree/main/ConvLSTM/seasonality.png" width=70%>
