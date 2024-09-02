@@ -48,18 +48,21 @@ Dissolved inorganic carbon; Total alkalinity; Surface partial pressure of CO2
 
 ## Approach
 Select Ocean Regions: 
-Shallow regions are significant due to their enhanced light availability, nutrient recycling, and diverse ecosystems, supporting higher primary productivity and biodiversity. 
+We are selecting shallower sea regions for our analysis. Shallow areas offer better light penetration for the productivity of phytoplankton growth, there’s better nutrient mixing between the seabed and the water, as well as the runoff nutrients from the land. Winds and tides in these areas offer physical nutrient mixing, influencing the phytoplankton blooms. All these reasons influence higher biodiversity and fishery feeding and spawning areas. Modeling chlorophyll density in these areas is vital for understanding fishery management, health, and productivity.
 
 The selected region of interest: North Sea
 
-Select time frame : Sep 1997 - Dec 2021
+Select time frame: Sep 1997 - Dec 2021
 
 Research questions:
 
--What are the primary biogeochemical and physical factors influencing chlorophyll density in various shallow sea regions?
--How can these factors be quantitatively integrated into a robust predictive model for chlorophyll density?
+- What are the primary biogeochemical and physical factors influencing chlorophyll density in various shallow sea regions?
+- How can these factors be quantitatively integrated into a robust predictive model for chlorophyll density?
 
 Here, we outline a summary of our employed strategies:
+- Collect and combine the datasets extracting the chosen base features for the model training.
+- Perform exploratory data analysis, use XGBoost to get the first look at the data and feature importance using SHAP.
+- Train deep learning models from the insights gained from EDA and XGBoost.
 
 - **Random Forests**:
 - **XgBoost**:
