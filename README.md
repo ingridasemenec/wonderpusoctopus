@@ -64,6 +64,7 @@ Here, we outline a summary of our employed strategies:
 - Perform exploratory data analysis, use XGBoost to get the first look at the data and feature importance using SHAP.
 - Train deep learning models from the insights gained from EDA and XGBoost.
 
+Methods:
 - **Random Forests**:
 - **XgBoost**:
 - **CNN**:
