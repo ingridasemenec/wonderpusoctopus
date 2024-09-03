@@ -27,22 +27,21 @@ Predicting/Forecasting chlorophyll levels accurately.
 - The data is collected by [Copernicus Marine Dataset](https://www.copernicus.eu/en).
 Copernicus Marine Datasets included:
 
-Dataset 1: Global Ocean Color (satellite observations)
- Chlorophyll 
+Dataset 1: [Global Ocean Color] (https://data.marine.copernicus.eu/product/OCEANCOLOUR_GLO_BGC_L4_MY_009_104/description) (satellite observations)
+Chlorophyll 
 
-Dataset 2: Global Ocean Biochemistry (simulated)
+Dataset 2: [Global Ocean Biochemistry Hindcast] (https://data.marine.copernicus.eu/product/GLOBAL_MULTIYEAR_BGC_001_029/description) (simulated)
 O2; NO3; PO4; Si; Fe
 
-Dataset 3: Global Ocean OSTIA (using in-situ & satellite data)
-Sea Surface Temperature 
+Dataset 3: [Global Ocean OSTIA] (https://data.marine.copernicus.eu/product/SST_GLO_SST_L4_REP_OBSERVATIONS_010_011/description) (using in-situ & satellite data)
+Sea Surface Temperature (analyzed_sst)
 
-Dataset 4: Multi Observation Global Ocean (using in-situ & satellite data)
-Sea Surface Salinity and Sea Surface Density
+Dataset 4: [Multi Observation Global Ocean] (https://data.marine.copernicus.eu/product/MULTIOBS_GLO_PHY_S_SURFACE_MYNRT_015_013/description) (using in-situ & satellite data)
+Sea Surface Salinity (sos) and Sea Surface Density (dos)
 
-Dataset 5: Global Ocean Surface Carbon (From model based on in-situ data)
-Dissolved inorganic carbon; Total alkalinity; Surface partial pressure of CO2
-              Sea water pH; Calcite saturation state; Aragonite saturation state; Surface 
-              downward flux of CO2
+Dataset 5: [Global Ocean Surface Carbon] (https://data.marine.copernicus.eu/product/MULTIOBS_GLO_BIO_CARBON_SURFACE_REP_015_008/description) (From model based on in-situ data)
+Total alkalinity (talk); Surface partial pressure of CO2 (spco2); Sea water pH (ph); Calcite saturation state (omega_ca); Aragonite saturation state (omega_ar); Surface downward flux of CO2 (fgco2)
+
 - Data processing:
   - ...
 
@@ -65,11 +64,26 @@ Here, we outline a summary of our employed strategies:
 - Train deep learning models from the insights gained from EDA and XGBoost.
 
 Methods:
-- **Random Forests**:
-- **XgBoost**:
+- **XGBoost**: eXtreme Gradient Boosting trained to predict chlorophyll concentrations using latitude, longitude, year, month, and biogeochmical features as input.
 - **CNN**:
 - **ConvLSTM**: Convolutional Long Short-Term Memory model trained to predict chlorophyll concentrations across both space and time.
-  
+
+## XGBoost
+The flowchart below shows the modeling framework used for training an XGBoost regressor to predict chlorophyll concentrations. Briefly, the datasets described above were accessed using [Copernicus Mariner Toolbox API] (https://help.marine.copernicus.eu/en/articles/7949409-copernicus-marine-toolbox-introduction). Data preprocessing was done to match the resolution between datasets (final resolution = 0.25° × 0.25°) and only chlorophyll values within 99 percentile were kept. Final dataset had 421801 data points with 19 features, which was further divided into training, validation and test sets. Before model training, correlated features were removes, i.e. only one feature among features with correlation > 0.8 was kept. XGBoost hypereparameters were tuned using a bayesian hyperparameter optimization framework. 
+![]() <img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/XGBoost/modeling_framework.png" width=60%>
+
+From the correlation heatmap below, feature sets with correlation > 0.8 are
+1. [ph, spco2]
+2. [omega_ar, omega_ca]
+3. [sos, dos, talk, tco2]
+4. [no3, po4]
+5. [o2, analysed_sst]
+![]() <img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/XGBoost/correlation_heatmap.png" width=60%>
+
+After removing the correlated features, the final feature set included [’latitude’, ‘longitude’, ‘year, 'month', 'fgco2', 'omega_ca', 'ph', 'fe', 'no3', 'si', 'o2', ’sos’]. The hyperparamter for the XGBoost model were trained via bayesian hyperparameter optimization using hyperopt library where the objective function to minimize was 5-fold CV RMSE on the training set. The range of hyperparameter values specifying the feature space were
+![]() <img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/XGBoost/hyperparameter_explored.png" width=60%>
+
+
 ## ConvLSTM
 The model captures key temporal patterns, as shown in the seasonality plot, but struggles with higher concentration areas, as indicated by the RMSE heatmap. The model tends to underpredict the concentration at the shoreline areas. However as we can see from the animated timesteps of prediction vs actual, we succeed in capturing the basic spacial structure as well as seasonal dependence. This demonstrates that this model is a viable option for this application if given more data and time.
 
