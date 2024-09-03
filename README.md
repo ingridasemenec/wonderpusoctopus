@@ -99,7 +99,7 @@ xgbr_param_space = {'max_depth': hp.choice('max_depth', range(3,9)),
 The scatter plot above shows the 5-fold CV RMSE values on the trianing set for the 50 hyperparameter sets tried during tuning. Hyperparameter set corresponding to minimum 
 5-fold CV RMSE after 50  iterations is selected for final model training. Comparing the performance of XGBoost regressor on the validation to the baseline model (where chlorophyll prediction = mean(chlorophyll values in the training set)), we can see singnificant improvement in both RMSE and MAPE.
 
-![]() <img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/XGBoost/model_performance.png" width=50%>
+![]() <img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/XGBoost/model_performance.png" width=20%>
 
 The trianed XGBoost regressor had 0.32 RMSE and 0.17 MAPE on the test set. Next, we used [SHAP](https://shap.readthedocs.io/en/latest/index.html) (SHapley Additive exPlanations) for interpreting the XGBoost regressor model. From the graph below, we can see the pH levels and Fe concentrations are the top two features in prediciton of chlorophyll concentrations. Lower pH can reduce the availability of carbonate ions, which are crucial for the growth of phytoplankton. The North Sea is subject to various anthropogenic pressures, including pollution and carbon dioxide emissions, which can lead to changes in pH. Phytoplankton require iron for photosynthesis. In high-nutrient, low-chlorophyll (HNLC) regions, iron is often the limiting factor that controls phytoplankton growth. While the North Sea is not considered an HNLC region, iron can still play a significant role, particularly in shallow waters where it might be more readily available due to sediment resuspension.
 
