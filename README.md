@@ -71,7 +71,7 @@ Methods:
 ## XGBoost
 The flowchart below shows the modeling framework used for training an XGBoost regressor to predict chlorophyll concentrations. Briefly, the datasets described above were accessed using [Copernicus Mariner Toolbox API](https://help.marine.copernicus.eu/en/articles/7949409-copernicus-marine-toolbox-introduction). Data preprocessing was done to match the resolution between datasets (final resolution = 0.25° × 0.25°) and only chlorophyll values within 99 percentile were kept. Final dataset had 421801 data points with 19 features, which was further divided into training, validation and test sets. Before model training, correlated features were removes, i.e. only one feature among features with correlation > 0.8 was kept. XGBoost hypereparameters were tuned using a bayesian hyperparameter optimization framework. 
 
-![]() <img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/XGBoost/modeling_framework.png">
+![]() <img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/XGBoost/modeling_framework.png" width=80%>
 
 From the correlation heatmap below, feature sets with correlation > 0.8 are
 1. [ph, spco2]
@@ -79,6 +79,8 @@ From the correlation heatmap below, feature sets with correlation > 0.8 are
 3. [sos, dos, talk, tco2]
 4. [no3, po4]
 5. [o2, analysed_sst]
+6. 
+![]() <img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/XGBoost/correlation_heatmap.png" width=80%>
 
 After removing the correlated features, the final feature set included [’latitude’, ‘longitude’, ‘year, 'month', 'fgco2', 'omega_ca', 'ph', 'fe', 'no3', 'si', 'o2', ’sos’]. The hyperparamter for the XGBoost model were trained via bayesian hyperparameter optimization using [hyperopt library](http://hyperopt.github.io/hyperopt/) where the objective function was to minimize 5-fold CV RMSE on the training set. The range of hyperparameter values specifying the feature space were
 ```
@@ -97,7 +99,7 @@ xgbr_param_space = {'max_depth': hp.choice('max_depth', range(3,9)),
 The scatter plot above shows the 5-fold CV RMSE values on the trianing set for the 50 hyperparameter sets tried during tuning. Hyperparameter set corresponding to minimum 
 5-fold CV RMSE after 50  iterations is selected for final model training. Comparing the performance of XGBoost regressor on the validation to the baseline model (where chlorophyll prediction = mean(chlorophyll values in the training set)), we can see singnificant improvement in both RMSE and MAPE.
 
-![]() <img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/XGBoost/model_performance.png" width=40%>
+![]() <img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/XGBoost/model_performance.png" width=30%>
 
 The trianed XGBoost regressor had 0.32 RMSE and 0.17 MAPE on the test set. Next, we used [SHAP](https://shap.readthedocs.io/en/latest/index.html) (SHapley Additive exPlanations) for interpreting the XGBoost regressor model. From the graph below, we can see the pH levels and Fe concentrations are the top two features in prediciton of chlorophyll concentrations. Lower pH can reduce the availability of carbonate ions, which are crucial for the growth of phytoplankton. The North Sea is subject to various anthropogenic pressures, including pollution and carbon dioxide emissions, which can lead to changes in pH. Phytoplankton require iron for photosynthesis. In high-nutrient, low-chlorophyll (HNLC) regions, iron is often the limiting factor that controls phytoplankton growth. While the North Sea is not considered an HNLC region, iron can still play a significant role, particularly in shallow waters where it might be more readily available due to sediment resuspension.
 
