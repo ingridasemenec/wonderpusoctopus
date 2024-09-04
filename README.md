@@ -64,9 +64,9 @@ Here, we outline a summary of our employed strategies:
 - Train deep learning models from the insights gained from EDA and XGBoost.
 
 Methods:
-- **XGBoost**: eXtreme Gradient Boosting trained to predict chlorophyll concentrations using latitude, longitude, year, month, and biogeochmical features as input.
+- [**XGBoost**](https://github.com/ingridasemenec/wonderpusoctopus/blob/main/XGBoost/XGBoost.ipynb): eXtreme Gradient Boosting trained to predict chlorophyll concentrations using latitude, longitude, year, month, and biogeochmical features as input.
 - [**CNN**](https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN.ipynb): Convolutional Neural Network trained to predict the chlorophyll concentrations across both space and time.
-- **ConvLSTM**: Convolutional Long Short-Term Memory model trained to predict chlorophyll concentrations across both space and time.
+- [**ConvLSTM**](https://github.com/ingridasemenec/wonderpusoctopus/blob/main/ConvLSTM/ConvLSTM.ipynb): Convolutional Long Short-Term Memory model trained to predict chlorophyll concentrations across both space and time.
 
 ## XGBoost
 The flowchart below shows the modeling framework used for training an XGBoost regressor to predict chlorophyll concentrations. Briefly, the datasets described above were accessed using [Copernicus Mariner Toolbox API](https://help.marine.copernicus.eu/en/articles/7949409-copernicus-marine-toolbox-introduction). Data preprocessing was done to match the resolution between datasets (final resolution = 0.25° × 0.25°) and only chlorophyll values within 99 percentile were kept. Final dataset had 421801 data points with 19 features, which was further divided into training, validation and test sets. Before model training, correlated features were removes, i.e. only one feature among features with correlation > 0.8 was kept. XGBoost hypereparameters were tuned using a bayesian hyperparameter optimization framework. 
