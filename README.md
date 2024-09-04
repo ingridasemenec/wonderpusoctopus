@@ -65,7 +65,7 @@ Here, we outline a summary of our employed strategies:
 
 Methods:
 - **XGBoost**: eXtreme Gradient Boosting trained to predict chlorophyll concentrations using latitude, longitude, year, month, and biogeochmical features as input.
-- **CNN**: Convolutional Neural Network trained to predict the chlorophyll concentrations across both space and time.
+- [**CNN**](https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN.ipynb): Convolutional Neural Network trained to predict the chlorophyll concentrations across both space and time.
 - **ConvLSTM**: Convolutional Long Short-Term Memory model trained to predict chlorophyll concentrations across both space and time.
 
 ## XGBoost
