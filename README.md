@@ -68,7 +68,7 @@ Methods:
 - [**CNN**](https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN.ipynb): Convolutional Neural Network trained to predict the chlorophyll concentrations across both space and time.
 - [**ConvLSTM**](https://github.com/ingridasemenec/wonderpusoctopus/blob/main/ConvLSTM/ConvLSTM.ipynb): Convolutional Long Short-Term Memory model trained to predict chlorophyll concentrations across both space and time.
 
-## XGBoost ([Link](https://github.com/ingridasemenec/wonderpusoctopus/blob/main/XGBoost/XGBoost.ipynb))
+## [XGBoost](https://github.com/ingridasemenec/wonderpusoctopus/blob/main/XGBoost/XGBoost.ipynb)
 The flowchart below shows the modeling framework used for training an XGBoost regressor to predict chlorophyll concentrations. Briefly, the datasets described above were accessed using [Copernicus Mariner Toolbox API](https://help.marine.copernicus.eu/en/articles/7949409-copernicus-marine-toolbox-introduction). Data preprocessing was done to match the resolution between datasets (final resolution = 0.25° × 0.25°) and only chlorophyll values within 99 percentile were kept. Final dataset had 421801 data points with 19 features, which was further divided into training, validation and test sets. Before model training, correlated features were removes, i.e. only one feature among features with correlation > 0.8 was kept. XGBoost hypereparameters were tuned using a bayesian hyperparameter optimization framework. 
 
 ![]() <img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/XGBoost/modeling_framework.png" width=80%>
@@ -102,7 +102,7 @@ The trianed XGBoost regressor had 0.32 RMSE and 0.17 MAPE on the test set. Next,
 
 ![]() <img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/XGBoost/shap_summary_bar.png" width=80%>
 
-## CNN ([Link](https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN.ipynb))
+## [CNN](https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN.ipynb)
 
 The Convolutional Neural Network (CNN) model captures spatial dependencies in chlorophyll concentration data. This model is designed to process image-like data of the ocean area where spatial relationships between pixels can provide critical information for chlorophyll predictions. The CNN model is trained using normalized datasets and is evaluated based on the  RMSE (Root Mean Square Error) per pixel.
 
@@ -115,7 +115,7 @@ We compared multiple CNN architectures, including models using batch normalizati
 The figure shows the RMSE per pixel for the NetResDeep model, indicating areas where the model performed well and where it struggled.
 ![]()<img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN_RMSE.png" width=80%>
 
-## ConvLSTM ([Link](https://github.com/ingridasemenec/wonderpusoctopus/blob/main/ConvLSTM/ConvLSTM.ipynb))
+## [ConvLSTM](https://github.com/ingridasemenec/wonderpusoctopus/blob/main/ConvLSTM/ConvLSTM.ipynb)
 The model captures key temporal patterns, as shown in the seasonality plot, but struggles with higher concentration areas, as indicated by the RMSE heatmap. The model tends to underpredict the concentration at the shoreline areas. However as we can see from the animated timesteps of prediction vs actual, we succeed in capturing the basic spacial structure as well as seasonal dependence. This demonstrates that this model is a viable option for this application if given more data and time.
 
 ![]() <img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/ConvLSTM/chlorophyll_animation_map.gif" width=80%>
