@@ -65,7 +65,7 @@ Here, we outline a summary of our employed strategies:
 
 Methods:
 - **XGBoost**: eXtreme Gradient Boosting trained to predict chlorophyll concentrations using latitude, longitude, year, month, and biogeochmical features as input.
-- **CNN**:
+- **CNN**: Convolutional Neural Network trained to predict the chlorophyll concentrations across both space and time.
 - **ConvLSTM**: Convolutional Long Short-Term Memory model trained to predict chlorophyll concentrations across both space and time.
 
 ## XGBoost
@@ -101,6 +101,21 @@ Hyperparameter set corresponding to minimum 5-fold CV RMSE after 50  iterations 
 The trianed XGBoost regressor had 0.32 RMSE and 0.17 MAPE on the test set. Next, we used [SHAP](https://shap.readthedocs.io/en/latest/index.html) (SHapley Additive exPlanations) for interpreting the XGBoost regressor model. From the graph below, we can see the pH levels and Fe concentrations are the top two features in prediciton of chlorophyll concentrations. Lower pH can reduce the availability of carbonate ions, which are crucial for the growth of phytoplankton. The North Sea is subject to various anthropogenic pressures, including pollution and carbon dioxide emissions, which can lead to changes in pH. Phytoplankton require iron for photosynthesis. In high-nutrient, low-chlorophyll (HNLC) regions, iron is often the limiting factor that controls phytoplankton growth. While the North Sea is not considered an HNLC region, iron can still play a significant role, particularly in shallow waters where it might be more readily available due to sediment resuspension.
 
 ![]() <img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/XGBoost/shap_summary_bar.png" width=80%>
+
+## CNN
+
+The Convolutional Neural Network (CNN) model captures spatial dependencies in chlorophyll concentration data. This model is designed to process image-like data of the ocean area where spatial relationships between pixels can provide critical information for chlorophyll predictions. The CNN model is trained using normalized datasets and is evaluated based on the  RMSE (Root Mean Square Error) per pixel.
+
+The model demonstrates promising results by identifying spatial features and patterns, although there is still room for improvement, especially in areas with higher chlorophyll concentrations close to the shore.
+
+We compared multiple CNN architectures, including models using batch normalization, dropout, and deeper residual networks (ResNet-based), to evaluate their effectiveness in predicting chlorophyll concentrations. The RMSE values for both training and validation sets are displayed below, showing how each model performed:
+
+![]()<img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN_model_comp.png" width=80%>
+
+The figure shows the RMSE per pixel for the ResNetDeep model, indicating areas where the model performed well and where it struggled.
+![]()<img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN_RMSE.png" width=80%>
+
+To replicate the CNN model results, you can access the [CNN Jupyter Notebook](https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN.ipynb).
 
 ## ConvLSTM
 The model captures key temporal patterns, as shown in the seasonality plot, but struggles with higher concentration areas, as indicated by the RMSE heatmap. The model tends to underpredict the concentration at the shoreline areas. However as we can see from the animated timesteps of prediction vs actual, we succeed in capturing the basic spacial structure as well as seasonal dependence. This demonstrates that this model is a viable option for this application if given more data and time.
