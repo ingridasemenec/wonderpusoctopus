@@ -115,6 +115,9 @@ We compared multiple CNN architectures, including models using batch normalizati
 The figure shows the RMSE per pixel for the NetResDeep model, indicating areas where the model performed well and where it struggled.
 ![]()<img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN_RMSE.png" width=80%>
 
+Finally, the following plot shows the Chorophyll prediction for the NetResDeep model.
+![]()<img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN_chlor.gif" width=80%>
+
 ## [ConvLSTM](https://github.com/ingridasemenec/wonderpusoctopus/blob/main/ConvLSTM/ConvLSTM.ipynb)
 The model captures key temporal patterns, as shown in the seasonality plot, but struggles with higher concentration areas, as indicated by the RMSE heatmap. The model tends to underpredict the concentration at the shoreline areas. However as we can see from the animated timesteps of prediction vs actual, we succeed in capturing the basic spacial structure as well as seasonal dependence. This demonstrates that this model is a viable option for this application if given more data and time.
 
