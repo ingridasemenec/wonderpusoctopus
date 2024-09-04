@@ -108,11 +108,11 @@ The Convolutional Neural Network (CNN) model captures spatial dependencies in ch
 
 The model demonstrates promising results by identifying spatial features and patterns, although there is still room for improvement, especially in areas with higher chlorophyll concentrations close to the shore.
 
-We compared multiple CNN architectures, including models using batch normalization, dropout, and deeper residual networks (ResNet-based), to evaluate their effectiveness in predicting chlorophyll concentrations. The RMSE values for both training and validation sets are displayed below, showing how each model performed:
+We compared multiple CNN architectures, including models using batch normalization, dropout, and deeper residual networks (ResNet-based), to evaluate their effectiveness in predicting chlorophyll concentrations. The RMSE values for both training and validation sets are displayed below. We found the NetResDeep model to perform the best among the three models.
 
 ![]()<img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN_model_comp.png" width=80%>
 
-The figure shows the RMSE per pixel for the ResNetDeep model, indicating areas where the model performed well and where it struggled.
+The figure shows the RMSE per pixel for the NetResDeep model, indicating areas where the model performed well and where it struggled.
 ![]()<img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN_RMSE.png" width=80%>
 
 To replicate the CNN model results, you can access the [CNN Jupyter Notebook](https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN.ipynb).
