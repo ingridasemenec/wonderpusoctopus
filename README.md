@@ -98,13 +98,20 @@ Hyperparameter set corresponding to minimum 5-fold CV RMSE after 50  iterations 
 
 ![]() <img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/XGBoost/model_performance.png" width=35%>
 
-The trianed XGBoost regressor had 0.32 RMSE and 0.17 MAPE on the test set. Next, we used [SHAP](https://shap.readthedocs.io/en/latest/index.html) (SHapley Additive exPlanations) for interpreting the XGBoost regressor model. From the graph below, we can see the pH levels and Fe concentrations are the top two features in prediciton of chlorophyll concentrations. Lower pH can reduce the availability of carbonate ions, which are crucial for the growth of phytoplankton. The North Sea is subject to various anthropogenic pressures, including pollution and carbon dioxide emissions, which can lead to changes in pH. Phytoplankton require iron for photosynthesis. In high-nutrient, low-chlorophyll (HNLC) regions, iron is often the limiting factor that controls phytoplankton growth. While the North Sea is not considered an HNLC region, iron can still play a significant role, particularly in shallow waters where it might be more readily available due to sediment resuspension.
+The trained XGBoost regressor had 0.32 RMSE and 0.17 MAPE on the test set. Next, we used [SHAP](https://shap.readthedocs.io/en/latest/index.html) (SHapley Additive exPlanations) for interpreting the XGBoost regressor model. From the graph below, we can see the pH levels and Fe concentrations are the top two features in prediciton of chlorophyll concentrations. Lower pH can reduce the availability of carbonate ions, which are crucial for the growth of phytoplankton. The North Sea is subject to various anthropogenic pressures, including pollution and carbon dioxide emissions, which can lead to changes in pH. Phytoplankton require iron for photosynthesis. In high-nutrient, low-chlorophyll (HNLC) regions, iron is often the limiting factor that controls phytoplankton growth. While the North Sea is not considered an HNLC region, iron can still play a significant role, particularly in shallow waters where it might be more readily available due to sediment resuspension.
 
 ![]() <img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/XGBoost/shap_summary_bar.png" width=80%>
 
 ## [CNN](https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN.ipynb)
 
 The Convolutional Neural Network (CNN) model captures spatial dependencies in chlorophyll concentration data. This model is designed to process image-like data of the ocean area where spatial relationships between pixels can provide critical information for chlorophyll predictions. The CNN model is trained using normalized datasets and is evaluated based on the  RMSE (Root Mean Square Error) per pixel.
+
+In addition to normalizing training data to have zero mean and unit standard deviation, we also process the NaN values as follows:
+- First flatten each feature tensor, find and save the positions of NaNs and drop them out. (NaNs correspond to land coordinates so they are same across the dataset).
+- Train the model on the data without NaNs.
+- After prediction we inserted the NaNs back and get final plot.
+
+![]() <img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN_transformation.PNG" width=80%>
 
 The model demonstrates promising results by identifying spatial features and patterns, although there is still room for improvement, especially in areas with higher chlorophyll concentrations close to the shore.
 
