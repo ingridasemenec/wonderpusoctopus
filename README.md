@@ -43,7 +43,8 @@ Dataset 5: [Global Ocean Surface Carbon](https://data.marine.copernicus.eu/produ
 Total alkalinity (talk); Surface partial pressure of CO2 (spco2); Sea water pH (ph); Calcite saturation state (omega_ca); Aragonite saturation state (omega_ar); Surface downward flux of CO2 (fgco2)
 
 - Data processing:
-  - ...
+  - For XGBoost, we retrieved the data from the Copernicus Marine datasets mentioned above for the North Sea region (with latitude range [50, 62] and longitude range [-6, 12]), for the period from 1997-01-01 to 2023-01-01 (we remark that the overall overlapping period of all the datasets was from 1997 to 2021). Since we were only interested in the surface sea level, we retrieved data with depth range [0, 0.5]. After merging the various datasets (please refer to the Jupyter notebook merged_datasets_EDA_and_XGBoost_049depth_data_cleaning.ipynb in the XGBoost folder for more information on the merging process), we further dealt with the outliers from the chlorophyll density values, whose distribution had (min, max, mean, stdev) = (0.075, 46.301, 0.976, 1.364), by removing all the values above 6.73 (corresponding to the 99th percentile of the chlorophyll values).
+  - 
 
 ## Approach
 Select Ocean Regions: 
