@@ -24,7 +24,7 @@ NOAA, Fish and Wildlife Department, local fisheries, coastal communities.
 Predicting/Forecasting chlorophyll levels accurately.
 
 ## Dataset
-The data is collected by [Copernicus Marine Dataset](https://www.copernicus.eu/en).
+The monthly averaged data is collected by [Copernicus Marine Dataset](https://www.copernicus.eu/en).
 Copernicus Marine Datasets included:
 
 - Dataset 1: [Global Ocean Color](https://data.marine.copernicus.eu/product/OCEANCOLOUR_GLO_BGC_L4_MY_009_104/description) (satellite observations)
@@ -36,11 +36,11 @@ Copernicus Marine Datasets included:
 - Dataset 3: [Global Ocean OSTIA](https://data.marine.copernicus.eu/product/SST_GLO_SST_L4_REP_OBSERVATIONS_010_011/description) (using in-situ & satellite data)
   - Variable of interest: Sea Surface Temperature (analyzed_sst)
 
-Dataset 4: [Multi Observation Global Ocean](https://data.marine.copernicus.eu/product/MULTIOBS_GLO_PHY_S_SURFACE_MYNRT_015_013/description) (using in-situ & satellite data)
-- Variables of interest: Sea Surface Salinity (sos) and Sea Surface Density (dos)
+- Dataset 4: [Multi Observation Global Ocean](https://data.marine.copernicus.eu/product/MULTIOBS_GLO_PHY_S_SURFACE_MYNRT_015_013/description) (using in-situ & satellite data)
+  - Variables of interest: Sea Surface Salinity (sos) and Sea Surface Density (dos)
 
-Dataset 5: [Global Ocean Surface Carbon](https://data.marine.copernicus.eu/product/MULTIOBS_GLO_BIO_CARBON_SURFACE_REP_015_008/description) (From model based on in-situ data)
- - Variables of interest: Total alkalinity (talk); Surface partial pressure of CO2 (spco2); Sea water pH (ph); Calcite saturation state (omega_ca); Aragonite saturation state (omega_ar); Surface downward flux of CO2 (fgco2)
+- Dataset 5: [Global Ocean Surface Carbon](https://data.marine.copernicus.eu/product/MULTIOBS_GLO_BIO_CARBON_SURFACE_REP_015_008/description) (From model based on in-situ data)
+  - Variables of interest: Total alkalinity (talk); Surface partial pressure of CO2 (spco2); Sea water pH (ph); Calcite saturation state (omega_ca); Aragonite saturation state (omega_ar); Surface downward flux of CO2 (fgco2)
 
 ## Approach
 Select Ocean Regions: 
@@ -72,7 +72,7 @@ The flowchart below shows the modeling framework used for training an XGBoost re
 
 - The datasets described above were accessed using [Copernicus Mariner Toolbox API](https://help.marine.copernicus.eu/en/articles/7949409-copernicus-marine-toolbox-introduction) for the North Sea region (with latitude range [50, 62] and longitude range [-6, 12]), for the period from 1997-01-01 to 2023-01-01 (we remark that the overall overlapping period of all the datasets was from 1997 to 2021). Since we were only interested in the surface sea level, we retrieved data with depth range [0, 0.5].
 - Data preprocessing involved
-  - matching the resolution between datasets (final resolution = 0.25° × 0.25°, please refer to the Jupyter notebook `merged_datasets_EDA_and_XGBoost_049depth_data_cleaning.ipynb` in the XGBoost folder for more information on the merging process)
+  - matching the resolution between datasets (final resolution = 0.25° × 0.25°, please refer to this [Jupyter notebook](https://github.com/ingridasemenec/wonderpusoctopus/blob/main/XGBoost/merged_datasets_EDA_and_XGBoost_049depth_data_cleaning.ipynb) in the XGBoost folder for more information on the merging process)
   - dealing with the outliers from the chlorophyll density values, whose distribution had (min, max, mean, stdev) = (0.075, 46.301, 0.976, 1.364), by removing all the values above 6.73 (corresponding to the 99th percentile of the chlorophyll values)
 - Final dataset had 421801 data points with 19 features, which was further divided into training, validation and test sets.
 - Before model training, correlated features were removes, i.e. only one feature among features with correlation > 0.8 was kept. From the correlation heatmap below, feature sets with correlation > 0.8 are
@@ -106,7 +106,12 @@ The trained XGBoost regressor had 0.32 RMSE and 0.17 MAPE on the test set. Next,
 
 ![]() <img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/XGBoost/shap_summary_bar.png" width=80%>
 
-## [CNN](https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN.ipynb)
+## Deep Learning models
+- Only the Global Ocean Biogeochemistry dataset was used because the top two features identified from SHAP are part of this dataset, and it has limited number of missing values present compared to others.
+- Data was accessed using [Copernicus Mariner Toolbox API](https://help.marine.copernicus.eu/en/articles/7949409-copernicus-marine-toolbox-introduction) for the period from 1993 to 2022, spanning 360 months. Key features include Fe, O2, NO3, pH, Si, and chlorophyll concentration. Since we were only interested in the surface sea level, we retrieved data with depth range [0, 0.5].
+- The models were trained on a portion of the data (first 288 months) and validated on the remaining unseen data (last 72 months).
+
+### [CNN](https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN.ipynb)
 
 The Convolutional Neural Network (CNN) model captures spatial dependencies in chlorophyll concentration data. This model is designed to process image-like data of the ocean area where spatial relationships between pixels can provide critical information for chlorophyll predictions. The CNN model is trained using normalized datasets and is evaluated based on the  RMSE (Root Mean Square Error) per pixel.
 
@@ -117,19 +122,17 @@ In addition to normalizing training data to have zero mean and unit standard dev
 
 ![]() <img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN_transformation.PNG" width=80%>
 
-The model demonstrates promising results by identifying spatial features and patterns, although there is still room for improvement, especially in areas with higher chlorophyll concentrations close to the shore.
-
-We compared multiple CNN architectures, including models using batch normalization, dropout, and deeper residual networks (ResNet-based), to evaluate their effectiveness in predicting chlorophyll concentrations. The RMSE values for both training and validation sets are displayed below. We found the NetResDeep model to perform the best among the three models.
+We compared multiple CNN architectures, including models using batch normalization (NetBatchNorm), dropout (NetDropout, and deeper residual networks (ResNet-based, NetResDeep), to evaluate their effectiveness in predicting chlorophyll concentrations. The RMSE values for both training and validation sets are displayed below. We found the NetResDeep model to perform the best among the three models.
 
 ![]()<img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN_model_comp.png" width=80%>
 
-The figure shows the RMSE per pixel for the NetResDeep model, indicating areas where the model performed well and where it struggled.
+The figure shows the RMSE per pixel for the NetResDeep model, indicating areas where the model performed well and where it struggled. The model demonstrates promising results by identifying spatial features and patterns, although there is still room for improvement, especially in areas with higher chlorophyll concentrations close to the shore.
 ![]()<img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN_RMSE.png" width=80%>
 
-Finally, the following plot shows the Chorophyll prediction for the NetResDeep model.
+Finally, the following plot shows the Chorophyll prediction for the NetResDeep model. 
 ![]()<img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN_chlor.gif" width=80%>
 
-## [ConvLSTM](https://github.com/ingridasemenec/wonderpusoctopus/blob/main/ConvLSTM/ConvLSTM.ipynb)
+### [ConvLSTM](https://github.com/ingridasemenec/wonderpusoctopus/blob/main/ConvLSTM/ConvLSTM.ipynb)
 The model captures key temporal patterns, as shown in the seasonality plot, but struggles with higher concentration areas, as indicated by the RMSE heatmap. The model tends to underpredict the concentration at the shoreline areas. However as we can see from the animated timesteps of prediction vs actual, we succeed in capturing the basic spacial structure as well as seasonal dependence. This demonstrates that this model is a viable option for this application if given more data and time.
 
 ![]() <img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/ConvLSTM/chlorophyll_animation_map.gif" width=80%>
