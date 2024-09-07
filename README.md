@@ -48,8 +48,6 @@ We are selecting shallower sea regions for our analysis. Shallow areas offer bet
 
 The selected region of interest: North Sea
 
-Select time frame: Sep 1997 - Dec 2021
-
 Research questions:
 
 - What are the primary biogeochemical and physical factors influencing chlorophyll density in various shallow sea regions?
