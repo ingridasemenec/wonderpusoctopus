@@ -107,7 +107,7 @@ The trained XGBoost regressor had 0.32 RMSE and 0.17 MAPE on the test set. Next,
 ![]() <img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/XGBoost/shap_summary_bar.png" width=80%>
 
 ## Deep Learning models
-- Only the Global Ocean Biogeochemistry dataset was used because the top two features identified from SHAP are part of this dataset, and it has limited number of missing values present compared to others.
+- Only the Global Ocean Biogeochemistry dataset was used because the top two features identified from SHAP are available in this dataset, and it has limited number of missing values present compared to others.
 - Data was accessed using [Copernicus Mariner Toolbox API](https://help.marine.copernicus.eu/en/articles/7949409-copernicus-marine-toolbox-introduction) for the period from 1993 to 2022, spanning 360 months. Key features include Fe, O2, NO3, pH, Si, and chlorophyll concentration. Since we were only interested in the surface sea level, we retrieved data with depth range [0, 0.5].
 - The models were trained on a portion of the data (first 288 months) and validated on the remaining unseen data (last 72 months).
 
@@ -124,10 +124,11 @@ In addition to normalizing training data to have zero mean and unit standard dev
 
 We compared multiple CNN architectures, including models using batch normalization (NetBatchNorm), dropout (NetDropout, and deeper residual networks (ResNet-based, NetResDeep), to evaluate their effectiveness in predicting chlorophyll concentrations. The RMSE values for both training and validation sets are displayed below. We found the NetResDeep model to perform the best among the three models.
 
-![]()<img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN_model_comp.png" width=80%>
+![]()<img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN_model_comp.png" width=60%>
 
 The figure shows the RMSE per pixel for the NetResDeep model, indicating areas where the model performed well and where it struggled. The model demonstrates promising results by identifying spatial features and patterns, although there is still room for improvement, especially in areas with higher chlorophyll concentrations close to the shore.
-![]()<img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN_RMSE.png" width=80%>
+
+![]()<img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN_RMSE.png" width=60%>
 
 Finally, the following plot shows the Chorophyll prediction for the NetResDeep model. 
 ![]()<img src="https://github.com/ingridasemenec/wonderpusoctopus/blob/main/CNN/CNN_chlor.gif" width=80%>
